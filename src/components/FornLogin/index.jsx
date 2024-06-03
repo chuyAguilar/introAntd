@@ -1,8 +1,9 @@
-import React from 'react';
 import { Button, Form, Input, Card } from 'antd'
 import './FormLogin.css';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-
+import Password from 'antd/es/input/Password';
+import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react'
 
 //Funcion para enviar los datos de el formulario
 const onFinish = (values) => {
@@ -14,6 +15,12 @@ const onFinishFailed = (errorInfo) => {
     console.log('FAILED', errorInfo);
 }
 
+const user = {
+    username: 'admin',
+    Password: 'admin'
+}
+
+const navigate = useNavigate();
 
 const Formlogin = () => {
     return (
