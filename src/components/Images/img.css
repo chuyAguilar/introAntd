@@ -1,0 +1,12 @@
+.content-left{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+}
+
+.content-left img{
+width: 100%;
+margin-left: 10px;
+}
