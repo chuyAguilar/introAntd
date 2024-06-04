@@ -1,10 +1,21 @@
 import React from 'react';
 import { Layout, Menu, Button, Typography } from 'antd';
+import { useNavigate } from 'react-router-dom'
+
+//const navigate = useNavigate(); 
+
+
 
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate('/login');
+  };
+
   return (
     <Layout className="layout">
       <Header>
@@ -18,8 +29,8 @@ const HomePage = () => {
       <Content style={{ padding: '0 50px' }}>
         <div className="site-layout-content" style={{ marginTop: '50px' }}>
           <Title>Welcome to My Home Page</Title>
-          <Button type="primary" size="large" style={{ marginTop: '20px' }}>
-            Get Started
+         <Button type="primary" size="large" style={{ marginTop: '20px' }} onClick={handleLoginClick}>
+            Login
           </Button>
         </div>
       </Content>

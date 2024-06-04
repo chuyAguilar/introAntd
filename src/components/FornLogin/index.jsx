@@ -1,28 +1,46 @@
 import { Button, Form, Input, Card } from 'antd'
 import './FormLogin.css';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import Password from 'antd/es/input/Password';
-import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-//Funcion para enviar los datos de el formulario
-const onFinish = (values) => {
-    console.log('Success', values)
-}
 
-//Funcio para mostrar errores en el formulario
-const onFinishFailed = (errorInfo) => {
-    console.log('FAILED', errorInfo);
-}
 
-const user = {
-    username: 'admin',
-    Password: 'admin'
-}
 
-const navigate = useNavigate();
 
 const Formlogin = () => {
+
+    //Funcion para enviar los datos de el formulario
+    const onFinish = (values) => {
+        const { username, Password } = values;
+        if (username == user.username && Password == user.Password) {
+            navigate('/');
+        } else {
+            onFinishFailed();
+        }
+        console.log('Success', values)
+    }
+
+    //Funcio para mostrar errores en el formulario
+    const onFinishFailed = (errorInfo) => {
+        setLoginError(true);
+        console.log('FAILED', errorInfo);
+    }
+
+    //Estado para el error de login
+    const [loginError, setLoginError] = useState(false);
+
+    const user = {
+        username: 'admin',
+        Password: 'admin'
+    }
+
+    const navigate = useNavigate();
+
+    const handleHomeClick = () => {
+        navigate('/');
+    };
+
     return (
         <card
             tittle="Bienvenido!!"
@@ -62,6 +80,10 @@ const Formlogin = () => {
                     </Button>
                 </Form.Item>
             </Form>
+
+            <Button type="primary" size="large" style={{ marginTop: '20px' }} onClick={handleHomeClick}>
+                Regresar
+            </Button>
 
         </card>
     );
