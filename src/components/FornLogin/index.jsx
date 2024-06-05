@@ -3,23 +3,54 @@ import './FormLogin.css';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios';
+
 
 
 
 
 
 const Formlogin = () => {
+    const navigate = useNavigate();
+
+    const user = {
+        username: 'admin',
+        Password: 'admin'
+    }
+
+
+    const handleHomeClick = () => {
+        navigate('/');
+    };
+
+    // Estado de error de registro
+    const [registerError, setRegisterError] = useState(false);
+
+    // Estado de carga
+    const [loading, setLoading] = useState(false);
+
+    //Estado para el error de login
+    const [loginError, setLoginError] = useState(false);
+
 
     //Funcion para enviar los datos de el formulario
-    const onFinish = (values) => {
-        const { username, Password } = values;
-        if (username == user.username && Password == user.Password) {
+    const onFinish = async (values) => {
+        setLoading(true); // Establece el estado de carga a true al enviar el formulario
+        try {
+            const response = await axios.post('https://lizard-server.vercel.app/api/auth/signin', {
+                email: values.username,
+                password: values.password
+            });
+            console.log('Inicio de sesion exitoso', response.data);
+            localStorage.setItem('token', response.data.token);
             navigate('/');
-        } else {
-            onFinishFailed();
+        } catch (error) {
+            console.error('Error en el inicio de sesion', error.response?.data || error.message);
+            setLoginError(true);
+        } finally {
+            setLoading(false); // Establece el estado de carga a false
         }
-        console.log('Success', values)
-    }
+    };
 
     //Funcio para mostrar errores en el formulario
     const onFinishFailed = (errorInfo) => {
@@ -27,19 +58,6 @@ const Formlogin = () => {
         console.log('FAILED', errorInfo);
     }
 
-    //Estado para el error de login
-    const [loginError, setLoginError] = useState(false);
-
-    const user = {
-        username: 'admin',
-        Password: 'admin'
-    }
-
-    const navigate = useNavigate();
-
-    const handleHomeClick = () => {
-        navigate('/');
-    };
 
     return (
         <card
@@ -54,6 +72,7 @@ const Formlogin = () => {
                     remember: true,
                 }}
                 onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
             >
                 <Form.Item name="username"
                     rules={[
@@ -62,7 +81,7 @@ const Formlogin = () => {
                             message: "Porfavor ingrese usuario"
                         },
                     ]}>
-                    <Input prefix={<UserOutlined className='site-form-item-icon' />} placeholder='Usuario' />
+                    <Input prefix={<UserOutlined className='site-form-item-icon' />} placeholder='Correo' />
                 </Form.Item>
                 <Form.Item
                     name="password"
@@ -75,12 +94,13 @@ const Formlogin = () => {
                     <input prefix={<LockOutlined className='site-form-item-icon' />} type='password' placeholder='Contraseña' />
                 </Form.Item>
                 <Form.Item>
+                    {registerError && <p style={{ color: 'red' }}>Credenciales incorrectas, intentlo de nuevo.</p>}
+
                     <Button type='primary' htmlType='sunmit' className='login-form-button'>
                         Iniciar Sesion
                     </Button>
                 </Form.Item>
             </Form>
-
             <Button type="primary" size="large" style={{ marginTop: '20px' }} onClick={handleHomeClick}>
                 Regresar
             </Button>

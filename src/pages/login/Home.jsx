@@ -2,9 +2,6 @@ import React from 'react';
 import { Layout, Menu, Button, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom'
 
-//const navigate = useNavigate(); 
-
-
 
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
@@ -16,13 +13,17 @@ const HomePage = () => {
     navigate('/login');
   };
 
+  const handleSignUpClick = () => {
+    navigate('/SignUp');
+  };
+
   return (
     <Layout className="layout">
       <Header>
         <div className="logo" />
         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
           <Menu.Item key="1">Home</Menu.Item>
-          <Menu.Item key="2">About</Menu.Item>
+          <Menu.Item key="2">Registrate</Menu.Item>
           <Menu.Item key="3">Contact</Menu.Item>
         </Menu>
       </Header>
@@ -31,6 +32,9 @@ const HomePage = () => {
           <Title>Welcome to My Home Page</Title>
          <Button type="primary" size="large" style={{ marginTop: '20px' }} onClick={handleLoginClick}>
             Login
+          </Button>
+          <Button type="primary" size="large" style={{ marginTop: '20px' }} onClick={handleSignUpClick}>
+            Registrate
           </Button>
         </div>
       </Content>

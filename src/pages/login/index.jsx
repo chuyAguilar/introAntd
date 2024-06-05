@@ -2,7 +2,7 @@
 
 import React from 'react';
 import LayoutComponent from "../../components/Layout/LayoutComponent";
-import Img from '../../components/Images';
+import { Img } from '../../components/Images';
 import Formlogin from '../../components/FornLogin';
 
 const Login = () => {
