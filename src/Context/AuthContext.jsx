@@ -6,7 +6,7 @@ export const AuthProvider = (props) => {
     const {children} = props
 
     const data = {
-        user: null,
+        user: 'chut',
         login: () => console.log('login'),
         logout: () => console.log('logout'),
         upDateUser: () => console.log('update user'),
@@ -16,4 +16,5 @@ export const AuthProvider = (props) => {
             {children}
         </AuthContext.Provider>
     )
-}
+};
+

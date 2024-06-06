@@ -4,22 +4,26 @@ import { ConfigProvider } from 'antd';
 import Login from './pages/login';
 import { BrowserRouter } from 'react-router-dom';
 import AppRoutes from './Routes';
+import { AuthProvider } from './Context/AuthContext.jsx';
 
 function App() {
 
   return (
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: '#7A83E1',
-        },
-      }}>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
-    </ConfigProvider>
+    <AuthProvider>
+
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: '#7A83E1',
+          },
+        }}>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </ConfigProvider>
+    </AuthProvider>
+
   )
 }
 
 export default App
-//<Login></Login>

@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import * as authservice from '../../Services/auth.js';
+import { useAuth } from '../../hooks/useAuth.jsx';
 
 
 
@@ -60,7 +61,9 @@ const Formlogin = () => {
         console.log('FAILED', errorInfo);
     }
 
-
+    //manejo de estado de autenticacion
+    const useAuthDATA = useAuth();
+    console.log(useAuthDATA);
     return (
         <card
             tittle="Bienvenido!!"
