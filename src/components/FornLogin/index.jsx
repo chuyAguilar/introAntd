@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import * as authservice from '../../Services/auth.js';
 import { useAuth } from '../../hooks/useAuth.jsx';
+//import { storageControler } from "../Services/Token";
+
 
 
 
@@ -34,6 +36,7 @@ const Formlogin = () => {
     //Estado para el error de login
     const [loginError, setLoginError] = useState(false);
 
+    const { login } = useAuthData;
 
     //Funcion para enviar los datos de el formulario
     const onFinish = async (values) => {
@@ -43,6 +46,7 @@ const Formlogin = () => {
             if(response && response.data){
                  console.log('Inicio de sesion exitoso', response.data);
             localStorage.setItem('token', response.data.token);
+            login(response.data.token);
             navigate('/');
             }else{
                 console.log('error en el inicio de sesion, respuesta inesperada');
