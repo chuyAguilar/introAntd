@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import * as authservice from '../../Services/auth.js';
 import { useAuth } from '../../hooks/useAuth.jsx';
-//import { storageControler } from "../Services/Token";
+import { useAuthData } from "../../Context/AuthContext"; 
 
 
 
@@ -15,6 +15,7 @@ import { useAuth } from '../../hooks/useAuth.jsx';
 
 
 const Formlogin = () => {
+
     const navigate = useNavigate();
 
     const user = {
@@ -36,17 +37,18 @@ const Formlogin = () => {
     //Estado para el error de login
     const [loginError, setLoginError] = useState(false);
 
-    const { login } = useAuthData;
+    const { login } = useAuthData();
 
     //Funcion para enviar los datos de el formulario
     const onFinish = async (values) => {
         setLoading(true); // Establece el estado de carga a true al enviar el formulario
+        setLoginError(false);
         try {
             const response = await authservice.loginF(values.username,values.password);
             if(response && response.data){
                  console.log('Inicio de sesion exitoso', response.data);
-            localStorage.setItem('token', response.data.token);
-            login(response.data.token);
+            localStorage.setItem('token', response.data.generatedToken);
+            login(response.data.generatedToken);
             navigate('/');
             }else{
                 console.log('error en el inicio de sesion, respuesta inesperada');
@@ -69,10 +71,10 @@ const Formlogin = () => {
     const useAuthDATA = useAuth();
     console.log(useAuthDATA);
     return (
-        <card
+        <Card
             tittle="Bienvenido!!"
             bordered="false"
-            classname="responsive-card"
+            className="responsive-card"
         >
             <Form
                 name='nomral-login'
@@ -114,7 +116,7 @@ const Formlogin = () => {
                 Regresar
             </Button>
 
-        </card>
+        </Card>
     );
 };
 
